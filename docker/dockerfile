@@ -1,0 +1,7 @@
+FROM python:alpine
+
+WORKDIR /app
+
+RUN pip install Flask beautifulsoup4 requests python-dotenv
+
+CMD ["python", "api.py"]
