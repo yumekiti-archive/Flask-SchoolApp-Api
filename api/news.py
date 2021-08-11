@@ -9,12 +9,18 @@ import os
 from dotenv import load_dotenv
 
 # スクレイピング
-import requests
+import requests, re
 from bs4 import BeautifulSoup
 
 def news():
 
-    news = []
+    ids = []
+    titles = []
+    dates = []
+    tags = []
+    links = []
+
+    params = []
 
     # セッション開始
     session = requests.session()
@@ -28,10 +34,32 @@ def news():
     # html解析
     soup = BeautifulSoup(geturl.content, 'html.parser')
 
-    for element in soup.find_all('li'):
-        news.append({'title': element.text})
+    # データの取得
+    for element in soup.find_all('a'):
+        if 'news_view' in element.get('href'):
+            ids.append(re.sub(r"\D", "", element.get('href')))
+    for element in soup.find_all('dd'):
+        titles.append(element.text)
+    for element in soup.find_all('dt'):
+        dates.append(element.text.split(None,1)[0].replace(" ", ""))
+    for element in soup.find_all('dt'):
+        tags.append(element.text.split(None,1)[1].replace(" ", ""))
+    for element in soup.find_all('a'):
+        if 'news_view' in element.get('href'):
+            links.append('https://comp-app.ecc-sv.com/app/news' + element.get('href').strip('.'))
+
+    # paramsにデータを入れる
+    for i, id in enumerate(ids):
+        params.append({
+            'id': id,
+            'title': titles[i],
+            'date': dates[i],
+            'tag': tags[i],
+            'link': links[i],
+        })
 
     # セッション終了
     session.close()
 
-    return json.dumps(news)
+    # jsonにして返す
+    return json.dumps(params)
