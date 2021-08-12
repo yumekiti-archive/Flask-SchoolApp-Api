@@ -10,17 +10,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/api', methods=['GET'])
-def GetNews():
+@app.route('/news', methods=['GET'])
+def News():
+    return news.news()
 
-    return news.only(16282132111362768937)
-
-@app.route('/api', methods=['POST'])
-def post():
-    result = {
-        'data': request.json['text']
-    }
-    return jsonify(result)
+@app.route('/news', methods=['POST'])
+def OnlyNews():
+    return news.only(request.json['id'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

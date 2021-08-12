@@ -1,43 +1,63 @@
 <html>
-    <head>
-        <title>SchoolApp-Api</title>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    </head>
-    <body>
-        <div id="app">
-            <button @click="this.get">get</button>
-            <button @click="this.post">post</button>
-            <input v-model="formData.text" />
+
+<head>
+    <title>SchoolApp-Api</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="this.get">get</button>
+        <button @click="this.post">post</button>
+        <input v-model="formData.id" />
+        <div v-for="data in result.data" :key="data.id">
             <p>
-                [[ result.data ]]
+                id: <span style="color: deepskyblue;" @click="formData.id = data.id">[[data.id]]</span>
+                <button @click="post(data.id)">詳細</button><br>
+                title: [[data.title]]<br>
+                data: [[data.data]]<br>
+                date: [[data.date]]<br>
+                tag: [[data.tag]]<br>
+                link: <a style="color: deepskyblue;" :href="data.link">[[data.link]]</a>
             </p>
         </div>
-    </body>
+        <br>
+        <hr>
+        <br>
+        <p>
+            [[ result.data ]]
+        </p>
+    </div>
+</body>
+
 </html>
 
 <script>
-    
+
     var app = new Vue({
         el: '#app',
         delimiters: ['[[', ']]'], // Flaskのdelimiterとの重複を回避
         data: {
             result: 'click get',
             formData: {
-                text: "let's post",
+                id: '',
             },
         },
-        methods:{
-            get(){
+        methods: {
+            get() {
                 axios
-                    .get('http://localhost:5000/api')
+                    .get('http://localhost:5000/news')
                     .then(res => {
                         this.result = res
                     })
             },
-            post(){
+            post(id) {
+                if (id != "[object PointerEvent]") {
+                    this.formData.id = id
+                }
                 axios
-                    .post('http://localhost:5000/api', this.formData)
+                    .post('http://localhost:5000/news', this.formData)
                     .then(res => {
                         this.result = res
                     })
