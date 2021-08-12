@@ -91,4 +91,4 @@ def only(id):
     session.close()
 
     # jsonにして返す
-    return json.dumps(params[0])
+    return json.dumps(params)

@@ -12,19 +12,18 @@
         <button @click="this.post">post</button>
         <input v-model="formData.id" />
         <!-- 一時的false -->
-        <div  v-if="false" v-for="data in result.data" :key="data.id">
+        <div  v-if="true" v-for="data in result.data" :key="data.id">
             <p>
                 <span v-if="data.id">id: <span style="color: deepskyblue;" @click="formData.id = data.id">[[data.id]]</span></span>
                 <span v-if="data.id"><button @click="post(data.id)">詳細</button><br></span>
                 <span v-if="data.title">title: [[data.title]]<br></span>
-                <span v-if="data.data">data: [[data.data]]<br></span>
-                <span v-if="data.date">date: [[data.date]]<br></span>
                 <span v-if="data.tag">tag: [[data.tag]]<br></span>
+                <span v-if="data.date">date: [[data.date]]<br></span>
+                <span v-if="data.data">data: [[data.data]]<br></span>
                 <span v-if="data.link">link: <a style="color: deepskyblue;" :href="data.link">[[data.link]]</a><br></span>
             </p>
             <hr>
         </div>
-        <br>
         <p>
             [[ result.data ]]
         </p>
