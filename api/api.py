@@ -13,7 +13,7 @@ def index():
 @app.route('/api', methods=['GET'])
 def GetNews():
 
-    return news.news()
+    return news.only(16282132111362768937)
 
 @app.route('/api', methods=['POST'])
 def post():

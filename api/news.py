@@ -63,3 +63,30 @@ def news():
 
     # jsonにして返す
     return json.dumps(params)
+
+def only(id):
+
+    params = []
+
+    # セッション開始
+    session = requests.session()
+
+    # ログイン
+    res = session.post(os.getenv('LOGIN_URL'), data=login.AppLogin(0,0))
+
+    # get
+    geturl = session.get(os.getenv('NEWS_ONLY_FRONT') + str(id) + os.getenv('NEWS_ONLY_BACK'))
+
+    # html解析
+    soup = BeautifulSoup(geturl.content, 'html.parser')
+
+    params.append({
+        'title': soup.find(class_='title').text,
+        'data': soup.find_all('div')[10].text,
+    })
+
+    # セッション終了
+    session.close()
+
+    # jsonにして返す
+    return json.dumps(params)
