@@ -11,19 +11,19 @@
         <button @click="this.get">get</button>
         <button @click="this.post">post</button>
         <input v-model="formData.id" />
-        <div v-for="data in result.data" :key="data.id">
+        <!-- 一時的false -->
+        <div  v-if="false" v-for="data in result.data" :key="data.id">
             <p>
-                id: <span style="color: deepskyblue;" @click="formData.id = data.id">[[data.id]]</span>
-                <button @click="post(data.id)">詳細</button><br>
-                title: [[data.title]]<br>
-                data: [[data.data]]<br>
-                date: [[data.date]]<br>
-                tag: [[data.tag]]<br>
-                link: <a style="color: deepskyblue;" :href="data.link">[[data.link]]</a>
+                <span v-if="data.id">id: <span style="color: deepskyblue;" @click="formData.id = data.id">[[data.id]]</span></span>
+                <span v-if="data.id"><button @click="post(data.id)">詳細</button><br></span>
+                <span v-if="data.title">title: [[data.title]]<br></span>
+                <span v-if="data.data">data: [[data.data]]<br></span>
+                <span v-if="data.date">date: [[data.date]]<br></span>
+                <span v-if="data.tag">tag: [[data.tag]]<br></span>
+                <span v-if="data.link">link: <a style="color: deepskyblue;" :href="data.link">[[data.link]]</a><br></span>
             </p>
+            <hr>
         </div>
-        <br>
-        <hr>
         <br>
         <p>
             [[ result.data ]]
@@ -41,7 +41,7 @@
         data: {
             result: 'click get',
             formData: {
-                id: '',
+                id: '16282132111362768937',
             },
         },
         methods: {

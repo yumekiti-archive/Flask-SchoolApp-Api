@@ -82,11 +82,13 @@ def only(id):
 
     params.append({
         'title': soup.find(class_='title').text,
-        'data': soup.find_all('div')[10].text,
+        'date': soup.find_all('div')[9].text.split(None,1)[0].replace(" ", ""),
+        'tag': soup.find_all('div')[9].text.split(None,1)[1].replace(" ", ""),
+        'data': soup.find_all('div')[10].text.replace("\n", ""),
     })
 
     # セッション終了
     session.close()
 
     # jsonにして返す
-    return json.dumps(params)
+    return json.dumps(params[0])
